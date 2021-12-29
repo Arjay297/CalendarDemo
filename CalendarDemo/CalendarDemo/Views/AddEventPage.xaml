@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CalendarDemo.Views.AddEventPage"
+             xmlns:viewmodel="clr-namespace:CalendarDemo.ViewModels"
+             xmlns:models="clr-namespace:CalendarDemo.Models"
+             x:DataType="viewmodel:AddEventViewModel"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+
+
+    <ContentPage.BindingContext>
+        <viewmodel:AddEventViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Behaviors>
+        <xct:EventToCommandBehavior EventName="Appearing" Command="{Binding OnAppearingCommand}"/>
+    </ContentPage.Behaviors>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Title"/>
+            <Entry Placeholder="Event Title" Text="{Binding EventTitle}"/>
+            <Label Text="Event Information" />
+            <Entry Placeholder="Event Information" Text="{Binding EventInformation}"/>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Save" Command="{Binding SaveCommand}" />
+                <Button Text="Cancel" Command="{Binding CancelCommand}"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

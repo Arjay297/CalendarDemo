@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CalendarDemo.Views.AboutPage"
+             xmlns:vm="clr-namespace:CalendarDemo.ViewModels"
+             xmlns:controls="clr-namespace:XamForms.Controls;assembly=XamForms.Controls.Calendar" 
+             Title="{Binding Title}"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:DataType="vm:AboutViewModel"
+             xmlns:models="clr-namespace:CalendarDemo.Models">
+    
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Behaviors>
+        <xct:EventToCommandBehavior EventName="Appearing" Command="{Binding OnAppearingCommand}" />
+    </ContentPage.Behaviors>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
+        <controls:Calendar Padding="10,0,10,0"   
+                           SelectedBorderWidth="4"   
+                           DisabledBorderColor="Black"  
+                           ShowNumberOfWeek="false"  
+                           StartDay="Monday"  
+                           TitleLabelTextColor="Blue"  
+                           TitleLeftArrowTextColor="Blue"  
+                           SelectedDate="{Binding Date}"  
+                           SpecialDates="{Binding Events}"  
+                           DateCommand="{Binding ChosenDateCommand}"
+                           />
+        <Button Text="Add Event" Margin="10" CornerRadius="25" Command="{Binding GotoAddEventPage}"/>
+        <CollectionView ItemsSource="{Binding CalendarEvents}" 
+                        Margin="10" 
+                        SelectionMode="Single" 
+                        SelectedItem="{Binding SelectedEvents}"
+                        SelectionChangedCommand="{Binding SelectionChangedCommand}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:CalendarEvents">
+                    <Grid Padding="3">
+                        <StackLayout Orientation="Horizontal" >
+                            <StackLayout HorizontalOptions="FillAndExpand">
+                                <Label Text="{Binding Title}" FontSize="Title" />
+                                <Label Text="{Binding EventInformation}" />
+                            </StackLayout>
+                            <Label Text="{Binding EventDate, StringFormat='{0:MMMM dd, yyyy}'}" HorizontalOptions="End" VerticalOptions="Start"/>
+                        </StackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+
+</ContentPage>
